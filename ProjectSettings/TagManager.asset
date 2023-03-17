@@ -20,7 +20,7 @@ TagManager:
   - Wall
   - Player
   - Enemy
-  - 
+  - Boss
   - 
   - 
   - 
@@ -55,4 +55,7 @@ TagManager:
     locked: 0
   - name: Ground
     uniqueID: 2649148703
+    locked: 0
+  - name: Boss
+    uniqueID: 3017090539
     locked: 0
