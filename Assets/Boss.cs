@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Boss : MonoBehaviour
@@ -7,25 +5,20 @@ public class Boss : MonoBehaviour
 
 	public Transform player;
 
-	public bool isFlipped = false;
+	public void Update(){
+		LookAtPlayer();
+	}
 
 	public void LookAtPlayer()
 	{
-		Vector3 flipped = transform.localScale;
-		flipped.z *= -1f;
-
-		if (transform.position.x > player.position.x && isFlipped)
+	
+		if (transform.position.x > player.position.x)
 		{
-			transform.localScale = flipped;
-			transform.Rotate(0f, 180f, 0f);
-			isFlipped = false;
+			transform.localScale = new Vector3(-0.2f , 0.2f , 1f);
 		}
-		else if (transform.position.x < player.position.x && !isFlipped)
+		else if (transform.position.x < player.position.x )
 		{
-			transform.localScale = flipped;
-			transform.Rotate(0f, 180f, 0f);
-			isFlipped = true;
+			transform.localScale = new Vector3(0.2f , 0.2f , 1f);
 		}
 	}
-
 }

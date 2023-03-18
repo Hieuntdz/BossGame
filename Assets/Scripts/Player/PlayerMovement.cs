@@ -21,6 +21,7 @@ public class PlayerMovement : MonoBehaviour
     [Header("Layers")]
     [SerializeField] private LayerMask groundLayer;
     [SerializeField] private LayerMask wallLayer;
+    [SerializeField] private LayerMask bossLayer;
 
     [Header("Sounds")]
     [SerializeField] private AudioClip jumpSound;
@@ -61,7 +62,7 @@ public class PlayerMovement : MonoBehaviour
         if (Input.GetKeyUp(KeyCode.Space) && body.velocity.y > 0)
             body.velocity = new Vector2(body.velocity.x, body.velocity.y / 2);
 
-        if (onWall())
+        if (onWall() || onBoss())
         {
             body.gravityScale = 0;
             body.velocity = Vector2.zero;
@@ -86,7 +87,7 @@ public class PlayerMovement : MonoBehaviour
         if (coyoteCounter <= 0 && !onWall() && jumpCounter <= 0) return; 
         //If coyote counter is 0 or less and not on the wall and don't have any extra jumps don't do anything
 
-        SoundManager.instance.PlaySound(jumpSound);
+        // SoundManager.instance.PlaySound(jumpSound);
 
         if (onWall())
             WallJump();
@@ -131,6 +132,12 @@ public class PlayerMovement : MonoBehaviour
         RaycastHit2D raycastHit = Physics2D.BoxCast(boxCollider.bounds.center, boxCollider.bounds.size, 0, new Vector2(transform.localScale.x, 0), 0.1f, wallLayer);
         return raycastHit.collider != null;
     }
+    private bool onBoss()
+    {
+        RaycastHit2D raycastHit = Physics2D.BoxCast(boxCollider.bounds.center, boxCollider.bounds.size, 0, new Vector2(transform.localScale.x, 0), 0.1f, bossLayer);
+        return raycastHit.collider != null;
+    }
+
     public bool canAttack()
     {
         return horizontalInput == 0 && isGrounded() && !onWall();
